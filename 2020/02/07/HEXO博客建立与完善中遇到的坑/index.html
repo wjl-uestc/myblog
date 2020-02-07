@@ -8,16 +8,22 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>HEXO博客建立与完善中遇到的坑 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="#1. 搭建个人博客并更换主题yilia此处暂不提怎么搭建，前人之述备矣，我参考了：Hexo+GithubPages 非常简单易行的搭建个人博客#2. 对yilia的个性化##2.1 之前的一些注意事项  _config.yml有两个目录，一个是在根目录blog下，还有一个是在主题目录yalia\下,将hexo与git仓库连接起来，需要修改前者中的_config.ymlrepo项为自己的仓库地址：">
+<meta property="og:type" content="article">
 <meta property="og:title" content="HEXO博客建立与完善中遇到的坑">
 <meta property="og:url" content="http://yoursite.com/2020/02/07/HEXO%E5%8D%9A%E5%AE%A2%E5%BB%BA%E7%AB%8B%E4%B8%8E%E5%AE%8C%E5%96%84%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="#1. 搭建个人博客并更换主题yilia此处暂不提怎么搭建，前人之述备矣，我参考了：Hexo+GithubPages 非常简单易行的搭建个人博客#2. 对yilia的个性化##2.1 之前的一些注意事项  _config.yml有两个目录，一个是在根目录blog下，还有一个是在主题目录yalia\下,将hexo与git仓库连接起来，需要修改前者中的_config.ymlrepo项为自己的仓库地址：">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.imgur.com/zhyJOhK.png">
 <meta property="article:published_time" content="2020-02-07T02:46:57.000Z">
-<meta property="article:modified_time" content="2020-02-07T02:55:21.972Z">
+<meta property="article:modified_time" content="2020-02-07T04:37:18.577Z">
 <meta property="article:author" content="wjl-pea">
-<meta property="article:tag" content="hexo,yilia,git">
+<meta property="article:tag" content="hexo">
+<meta property="article:tag" content="git">
+<meta property="article:tag" content="yilia">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/zhyJOhK.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -171,7 +177,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>#<strong>1. 搭建个人博客并更换主题yilia</strong><br>此处暂不提怎么搭建，前人之述备矣，我参考了：<br><a href="https://www.jianshu.com/p/860d3e0fff58" target="_blank" rel="noopener">Hexo+GithubPages 非常简单易行的搭建个人博客</a><br>#<strong>2. 对yilia的个性化</strong><br>##<strong>2.1 之前的一些注意事项</strong></p>
+<ul>
+<li><strong><code>_config.yml</code></strong>有两个目录，一个是在根目录blog下，还有一个是在主题目录<strong><code>yalia\</code></strong>下,将hexo与git仓库连接起来，需要修改前者中的<strong><code>_config.yml</code></strong>repo项为自己的仓库地址：</li>
+</ul>
+<pre><code>deploy:
+  type: git
+  repo: git@github.com:wjl-pea/test.git
+  branch: master</code></pre><p>这个仓库的地址在这个地方查找：<br><img src="https://i.imgur.com/zhyJOhK.png" alt="这是我的仓库"></p>
+
       
 
       
@@ -205,7 +219,15 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo,yilia,git</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">yilia</a>
         		</li>
       		
 		</ul>
@@ -403,7 +425,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo,yilia,git</a>
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">yilia</a>
               </li>
             
             <div class="clearfix"></div>

@@ -170,7 +170,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>#<strong>1. 搭建个人博客并更换主题yilia</strong><br>此处暂不提怎么搭建，前人之述备矣，我参考了：<br><a href="https://www.jianshu.com/p/860d3e0fff58" target="_blank" rel="noopener">Hexo+GithubPages 非常简单易行的搭建个人博客</a><br>#<strong>2. 对yilia的个性化</strong><br>##<strong>2.1 之前的一些注意事项</strong></p>
+<ul>
+<li><strong><code>_config.yml</code></strong>有两个目录，一个是在根目录blog下，还有一个是在主题目录<strong><code>yalia\</code></strong>下,将hexo与git仓库连接起来，需要修改前者中的<strong><code>_config.yml</code></strong>repo项为自己的仓库地址：</li>
+</ul>
+<pre><code>deploy:
+  type: git
+  repo: git@github.com:wjl-pea/test.git
+  branch: master</code></pre><p>这个仓库的地址在这个地方查找：<br><img src="https://i.imgur.com/zhyJOhK.png" alt="这是我的仓库"></p>
+
       
 
       
@@ -183,7 +191,15 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo,yilia,git</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">yilia</a>
         		</li>
       		
 		</ul>
@@ -391,7 +407,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">hexo,yilia,git</a>
+                <a href="javascript:void(0)" class="js-tag color5">hexo</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">yilia</a>
               </li>
             
             <div class="clearfix"></div>
