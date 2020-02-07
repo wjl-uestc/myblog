@@ -190,9 +190,8 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">你的头像url</span><br><span class="line">avatar: img/图片名称.jpg</span><br></pre></td></tr></table></figure>
 <p>然后可能还是不行，这个时候参见<a href="https://github.com/litten/hexo-theme-yilia/issues/288" target="_blank" rel="noopener">解决头像的问题 by litten(vilia源博主)</a><br>把其中提到的方法都试了一遍，最后是这么解决的：</p>
 <blockquote>
-<p>把<code>layout/_partial/left-col.ejs</code>的第六行改成</p>
+<p>把<code>layout/_partial/left-col.ejs</code>的第六行改成<br>    <img src="/test/2020/02/07/HEXO%E5%8D%9A%E5%AE%A2%E5%BB%BA%E7%AB%8B%E4%B8%8E%E5%AE%8C%E5%96%84%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/<%- url_for(theme.avatar) %>" class="js-avatar"></p>
 </blockquote>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src=<span class="string">"&lt;%- url_for(theme.avatar) %&gt;"</span> class=<span class="string">"js-avatar"</span>&gt;</span><br></pre></td></tr></table></figure>
 <p>这样在每个网页的头像都能显示了。<br><em>ps:有时候加载过慢也会有显示不出来的问题，可以清下缓存重新加载</em></p>
 <p>##<strong>2.3相册的缩略图不显示</strong><br>仔细地参照Lawlite的文章进行设置后，我们会发现，相册的缩略图无法显示，但是可以查看到原图。<br>原博评论区和<a href="https://blog.csdn.net/wardseptember/article/details/82780684" target="_blank" rel="noopener">这里</a>的解决方法是 一样的，但是我的缩略图仍然不显示。</p>
 <blockquote>
