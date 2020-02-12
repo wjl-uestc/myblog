@@ -6,15 +6,36 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Hexo</title>
+  <title>stm32学习笔记（一）GPIO | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="一、简介GPIO、端口和管脚一查才知道我对这些概念也是不甚清楚的：1.1 GPIO(General-purpose input&#x2F;output)，通用输入输出，以某些寄存器来控制或读取pin脚的电平高低，完成片上和外界的信息交互。1.2 端口是单片机内部（CPU单元）和外部IO的接口组[1]，比如说PA(Port A)端口控制的引脚PA0-7，我个人理解为控制一部分管脚输入输出属性的工具。1.3 引">
+<meta property="og:type" content="article">
+<meta property="og:title" content="stm32学习笔记（一）GPIO">
+<meta property="og:url" content="http://yoursite.com/2020/02/12/stm32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89GPIO/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、简介GPIO、端口和管脚一查才知道我对这些概念也是不甚清楚的：1.1 GPIO(General-purpose input&#x2F;output)，通用输入输出，以某些寄存器来控制或读取pin脚的电平高低，完成片上和外界的信息交互。1.2 端口是单片机内部（CPU单元）和外部IO的接口组[1]，比如说PA(Port A)端口控制的引脚PA0-7，我个人理解为控制一部分管脚输入输出属性的工具。1.3 引">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/12/1HAH61.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/12/1HAzfH.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/12/1HALm6.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/12/1HEppd.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/12/1HAXTO.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/12/1HAxte.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/12/1HAvkD.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/12/1HE91A.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/12/1HEC6I.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/12/1HEPXt.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/12/1HEk0f.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/12/1HEA78.png">
+<meta property="og:image" content="https://s2.ax1x.com/2020/02/12/1HEVAS.png">
+<meta property="article:published_time" content="2020-02-12T06:32:49.000Z">
+<meta property="article:modified_time" content="2020-02-12T07:17:40.336Z">
 <meta property="article:author" content="wjl-pea">
+<meta property="article:tag" content="stm32">
+<meta property="article:tag" content="arm">
+<meta property="article:tag" content="GPIO">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.ax1x.com/2020/02/12/1HAH61.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -148,16 +169,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-stm32学习笔记（一）GPIO" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-stm32学习笔记（一）GPIO" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/test/2020/02/12/stm32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89GPIO/">stm32学习笔记（一）GPIO</a>
+    <h1 class="article-title" itemprop="name">
+      stm32学习笔记（一）GPIO
     </h1>
   
 
@@ -191,6 +210,27 @@
       
 
       
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
     </div>
     <div class="article-info article-info-index">
       
@@ -217,16 +257,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/test/2020/02/12/stm32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89GPIO/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/02/12/stm32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89GPIO/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/test/2020/02/07/HEXO%E5%8D%9A%E5%AE%A2%E5%BB%BA%E7%AB%8B%E4%B8%8E%E5%AE%8C%E5%96%84%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">HEXO博客建立与完善中遇到的坑</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -246,196 +345,14 @@
 
 
 
-
   
-    <article id="post-HEXO博客建立与完善中遇到的坑" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/test/2020/02/07/HEXO%E5%8D%9A%E5%AE%A2%E5%BB%BA%E7%AB%8B%E4%B8%8E%E5%AE%8C%E5%96%84%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/">HEXO博客建立与完善中遇到的坑</a>
-    </h1>
   
 
-        
-        <a href="/test/2020/02/07/HEXO%E5%8D%9A%E5%AE%A2%E5%BB%BA%E7%AB%8B%E4%B8%8E%E5%AE%8C%E5%96%84%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/" class="archive-article-date">
-  	<time datetime="2020-02-07T02:46:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="1-搭建个人博客并更换主题yilia"><a href="#1-搭建个人博客并更换主题yilia" class="headerlink" title="1. 搭建个人博客并更换主题yilia"></a>1. 搭建个人博客并更换主题yilia</h1><p>此处暂不提怎么搭建，前人之述备矣，我参考了这篇博客：<br><a href="https://www.jianshu.com/p/860d3e0fff58" target="_blank" rel="noopener">Hexo+GithubPages 非常简单易行的搭建个人博客</a></p>
-<h1 id="2-对yilia的个性化"><a href="#2-对yilia的个性化" class="headerlink" title="2. 对yilia的个性化"></a>2. 对yilia的个性化</h1><blockquote>
-<p>yilia模型的个性化可以参考下面几篇博客：</p>
-<ul>
-<li><a href="https://blog.csdn.net/qq_37513473/article/details/88617281" target="_blank" rel="noopener">Yilia个性设置 by codeant_csdn</a></li>
-<li><a href="https://blog.csdn.net/weixin_43935907/article/details/89332997" target="_blank" rel="noopener">Hexo yilia主题的使用方法 by 笑不语</a></li>
-<li><a href="https://www.jianshu.com/p/c9de55660d1b" target="_blank" rel="noopener">Hexo主题更改以及小功能的添加 by Evan_陈先森</a> </li>
-<li><a href="http://www.lawlite.me/2017/04/13/Hexo-Github实现相册功能/" target="_blank" rel="noopener">Hexo+Github实现相册功能 by Lawlite</a></li>
-</ul>
-</blockquote>
-<h2 id="2-1-之前的一些注意事项"><a href="#2-1-之前的一些注意事项" class="headerlink" title="2.1 之前的一些注意事项"></a>2.1 之前的一些注意事项</h2><p>2.1.1. <code>_config.yml</code>有两个目录，一个是在根目录blog下，还有一个是在主题目录<code>yalia\</code>下,将hexo与git仓库连接起来，需要修改前者中的<strong>repo</strong>项为自己的仓库地址：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:wjl-pea/test.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-<p>仓库的地址在这个地方查找：<br><a href="https://imgchr.com/i/1WmRl8" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/08/1WmRl8.md.png" alt="1WmRl8.md.png"></a><br>2.1.2 在网页中插入的图片地址应该从仓库<code>download</code>后在地址栏获取。</p>
-<h2 id="2-2头像不显示-amp-除主页外头像不显示"><a href="#2-2头像不显示-amp-除主页外头像不显示" class="headerlink" title="2.2头像不显示&amp;除主页外头像不显示"></a>2.2头像不显示&amp;除主页外头像不显示</h2><blockquote>
-<p>将喜欢的头像放在<code>F:\blog\themes\yilia\source\img</code>下，在主题目录下的<code>_config.yml</code>中修改</p>
-</blockquote>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">你的头像url</span><br><span class="line">avatar: img/图片名称.jpg</span><br></pre></td></tr></table></figure>
-<p>然后可能还是不行，这个时候参见<a href="https://github.com/litten/hexo-theme-yilia/issues/288" target="_blank" rel="noopener">解决头像的问题 by litten(vilia源博主)</a><br>把其中提到的方法都试了一遍，最后是这么解决的：</p>
-<blockquote>
-<p>把<code>layout/_partial/left-col.ejs</code>的第六行改成 </p>
-</blockquote>
-<pre><code>&lt;img src=&quot;&lt;%- url_for(theme.avatar) %&gt;&quot; class=&quot;js-avatar&quot;&gt;</code></pre><blockquote>
-<p>这样在每个网页的头像都能显示了。<br><em>ps:有时候加载过慢也会有显示不出来的问题，可以清下缓存重新加载。</em></p>
-</blockquote>
-<h2 id="2-3相册的缩略图不显示"><a href="#2-3相册的缩略图不显示" class="headerlink" title="2.3相册的缩略图不显示"></a>2.3相册的缩略图不显示</h2><p>仔细地参照Lawlite的文章进行设置后，我们会发现，相册的缩略图无法显示，但是可以查看到原图。<br>原博评论区和<a href="https://blog.csdn.net/wardseptember/article/details/82780684" target="_blank" rel="noopener">这里</a>的解决方法是一样的，但是我的缩略图仍然不显示。</p>
-<blockquote>
-<p>然后我就想啊，这个<code>empty.png</code>是一定要在网页中使用的，按下<kbd>f12</kbd>，就发现控制台中有红标错误<strong><code>服务器未找到任何匹配请求的 URI(统一资源标识符)匹配的任何内容</code></strong>，后面有个<code>empty.png</code>的路径，和我放置的路径不同（抱歉我找不到原图了）。</p>
-</blockquote>
-<blockquote>
-<p>于是我就灵机一动把<code>empty.png</code>放在了<code>blog/source/photos/ins.j/img</code>的位置（ins.j是新建的）</p>
-</blockquote>
-<p><a href="https://imgchr.com/i/1Wm2Sf" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/08/1Wm2Sf.png" alt="1Wm2Sf.png"></a><br>这样我的缩略图就可以显示了，应该会有所帮助；因为不是专业方向，也就没去探究了（不然又是好几个小时）。<br><a href="https://wjl-pea.github.io/test/photos/" target="_blank" rel="noopener">我的相册</a><br><a href="https://imgchr.com/i/1WmW6S" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/08/1WmW6S.png" alt="1WmW6S.png"></a><br>第一次写博客，以后也会慢慢地补充自己喜欢的方面的文章，锻炼文笔，凝练技术，加油啦！</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">yilia</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/test/2020/02/07/HEXO%E5%8D%9A%E5%AE%A2%E5%BB%BA%E7%AB%8B%E4%B8%8E%E5%AE%8C%E5%96%84%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/test/2020/02/05/hello-world/">Hello World</a>
-    </h1>
   
 
-        
-        <a href="/test/2020/02/05/hello-world/" class="archive-article-date">
-  	<time datetime="2020-02-05T11:52:06.106Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/test/2020/02/05/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
+
   
 
 
@@ -458,8 +375,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,

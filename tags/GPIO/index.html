@@ -6,11 +6,11 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Hexo</title>
+  <title>Tag: GPIO | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://yoursite.com/tags/GPIO/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="wjl-pea">
@@ -150,51 +150,34 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-stm32学习笔记（一）GPIO" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
+  
     
-      <header class="article-header">
-        
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/test/archives/2020" class="archive-year">2020</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/test/2020/02/12/stm32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89GPIO/" class="archive-article-date">
+  	<time datetime="2020-02-12T06:32:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-12</time>
+</a>
+        </div>
+    	 
   
     <h1 itemprop="name">
-      <a class="article-title" href="/test/2020/02/12/stm32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89GPIO/">stm32学习笔记（一）GPIO</a>
+      <a class="archive-article-title" href="/test/2020/02/12/stm32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89GPIO/">stm32学习笔记（一）GPIO</a>
     </h1>
   
 
-        
-        <a href="/test/2020/02/12/stm32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89GPIO/" class="archive-article-date">
-  	<time datetime="2020-02-12T06:32:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="一、简介GPIO、端口和管脚"><a href="#一、简介GPIO、端口和管脚" class="headerlink" title="一、简介GPIO、端口和管脚"></a>一、简介GPIO、端口和管脚</h1><p>一查才知道我对这些概念也是不甚清楚的：<br>1.1 <strong>GPIO(General-purpose input/output)</strong>，通用输入输出，以某些寄存器来控制或读取pin脚的电平高低，完成片上和外界的信息交互。<br>1.2 <strong>端口</strong>是单片机内部（CPU单元）和外部IO的接口组[1]，比如说<code>PA(Port A)</code>端口控制的引脚PA0-7，我个人理解为控制一部分管脚输入输出属性的工具。<br>1.3 <strong>引脚</strong>(或者称之为管脚PIN)，也就是芯片外接的引脚。可以直接作为GPIO使用，也可以通过端口复用成别的功能来使用。<br>以stm32f103c8t6为例，48管脚中，除了电源管脚，一共有4组37个管脚可和GPIO连接使用，PA0-15，PB0-15，PC13-15，PD0-1，而其中的某一个管脚也可以复用为其他外设管脚来完成特定的功能。<br>cube上扣下来的引脚图：<br><a href="https://imgchr.com/i/1HAH61" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/12/1HAH61.png" alt="1HAH61.png"></a><br>数据手册上的引脚定义：<br><a href="https://imgchr.com/i/1HAzfH" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/12/1HAzfH.png" alt="1HAzfH.png"></a></p>
-<h1 id="二、GPIO功能描述"><a href="#二、GPIO功能描述" class="headerlink" title="二、GPIO功能描述"></a>二、GPIO功能描述</h1><p><a href="https://imgchr.com/i/1HALm6" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/12/1HALm6.png" alt="1HALm6.png"></a><br>主要意思就是说，我们通过软件配置某些GPIO端口寄存器，就可以控制IO端口的模式为上面的8种之一。</p>
-<h2 id="2-1-输入模式"><a href="#2-1-输入模式" class="headerlink" title="2.1 输入模式"></a>2.1 输入模式</h2><p><a href="https://imgchr.com/i/1HEppd" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/12/1HEppd.png" alt="1HEppd.png"></a><br>上拉、下拉、浮空，三者的区别就是是否加了上拉或者下拉电阻，浮空什么都不加。如果上拉、下拉，对应电平就会被强制被拉高、拉低，而浮空输入的电平则会变得不确定，在高电平到低电平浮动，常用于通信模块。肖特基触发器可以理解为一个把模拟信号转化成数字信号的东西（具体可百度）。<br>而模拟输入一般就是为A/D服务的，关闭肖特基触发器，采集到的是不经加工的信号。由A/D采集得到一定精度的电压值。</p>
-<h2 id="2-2-输出模式"><a href="#2-2-输出模式" class="headerlink" title="2.2 输出模式"></a>2.2 输出模式</h2><p><a href="https://imgchr.com/i/1HAXTO" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/12/1HAXTO.png" alt="1HAXTO.png"></a><br>输出模式中输出的电平信息可通过输出数据寄存器或者是复用功能输出来获取，以此来区分是复用输出。<br>后端的推挽结构需要仔细理解：</p>
-<h2 id="2-1-推挽输出"><a href="#2-1-推挽输出" class="headerlink" title="2.1 推挽输出"></a>2.1 推挽输出</h2><p>[2]<br><a href="https://imgchr.com/i/1HAxte" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/12/1HAxte.png" alt="1HAxte.png"></a><br>要输出的电平经过反相后，经过如图所示的上pmos下nmos的推挽结构，在共同漏极输出：<br>高电平：反相变低电平，上管导通，下管截止，输出高电平；<br>低电平：反相变高电平，上管截止，下管导通，输出低电平。</p>
-<h2 id="2-2-推挽输出"><a href="#2-2-推挽输出" class="headerlink" title="2.2 推挽输出"></a>2.2 推挽输出</h2><p><a href="https://imgchr.com/i/1HAvkD" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/12/1HAvkD.png" alt="1HAvkD.png"></a><br>推挽输出中的pmos管被禁止工作。<br>如果不加上拉电路，无论栅极的电平是高是低，都只能输出低电平；<br>在外接了上拉电路之后，当输入高电平，反相低电平，nmos截止之后，源极输出为高电平；<br>当输入低电平，反相高电平，nmos导通之后，源极输出为低电平。<br>那么推挽输出和开漏输出功能上又有什么区别呢？</p>
-<blockquote>
-<p>推挽输出一般用于输出电平在0-3.3V且需要高速切换开关的场合，而开漏输出一般用于需要线与功能的总线电路中和电平不匹配的场合，也就是可输出任意电压的高电平，且输出是高阻态的，驱动能力较弱。</p>
-</blockquote>
-<p>在平时，除必须用开漏输出，一般都用推挽输出。</p>
-<h1 id="三、GPIO寄存器描述"><a href="#三、GPIO寄存器描述" class="headerlink" title="三、GPIO寄存器描述"></a>三、GPIO寄存器描述</h1><p>要配置8种输入输出模式中的一个，我们需要按照下面的要求进行修改寄存器的响应位：<br><a href="https://imgchr.com/i/1HE91A" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/12/1HE91A.png" alt="1HE91A.png"></a></p>
-<h2 id="3-1-CR寄存器（端口配置寄存器）"><a href="#3-1-CR寄存器（端口配置寄存器）" class="headerlink" title="3.1 CR寄存器（端口配置寄存器）"></a>3.1 CR寄存器（端口配置寄存器）</h2><p><a href="https://imgchr.com/i/1HEC6I" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/12/1HEC6I.png" alt="1HEC6I.png"></a></p>
-<h2 id="3-2-IDR寄存器（读取输入数据寄存器）"><a href="#3-2-IDR寄存器（读取输入数据寄存器）" class="headerlink" title="3.2 IDR寄存器（读取输入数据寄存器）"></a>3.2 IDR寄存器（读取输入数据寄存器）</h2><p><a href="https://imgchr.com/i/1HEPXt" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/12/1HEPXt.png" alt="1HEPXt.png"></a></p>
-<h2 id="3-3-ODR寄存器（存储输出数据寄存器）"><a href="#3-3-ODR寄存器（存储输出数据寄存器）" class="headerlink" title="3.3 ODR寄存器（存储输出数据寄存器）"></a>3.3 ODR寄存器（存储输出数据寄存器）</h2><p><a href="https://imgchr.com/i/1HEk0f" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/12/1HEk0f.png" alt="1HEk0f.png"></a></p>
-<h2 id="3-4-BSRR寄存器（对ODR寄存器的修改）"><a href="#3-4-BSRR寄存器（对ODR寄存器的修改）" class="headerlink" title="3.4 BSRR寄存器（对ODR寄存器的修改）"></a>3.4 BSRR寄存器（对ODR寄存器的修改）</h2><p><a href="https://imgchr.com/i/1HEA78" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/12/1HEA78.png" alt="1HEA78.png"></a></p>
-<h2 id="3-5-LCKR（锁存器，只有使能了，输出才会跟着输入数据的变化而变化）"><a href="#3-5-LCKR（锁存器，只有使能了，输出才会跟着输入数据的变化而变化）" class="headerlink" title="3.5 LCKR（锁存器，只有使能了，输出才会跟着输入数据的变化而变化）"></a>3.5 LCKR（锁存器，只有使能了，输出才会跟着输入数据的变化而变化）</h2><p><a href="https://imgchr.com/i/1HEVAS" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/12/1HEVAS.png" alt="1HEVAS.png"></a></p>
-<p><em>参考：</em><br>[1]<a href="https://blog.csdn.net/qq_42384937/article/details/82970224" target="_blank" rel="noopener">单片机引脚与端口，引脚和GPIO的区别</a><br>[2]<a href="https://blog.csdn.net/y673533511/article/details/87601054" target="_blank" rel="noopener">STM32 推挽输出和开漏输出</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -214,229 +197,19 @@
 		</ul>
 	</div>
 
-      
+          
 
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/test/2020/02/12/stm32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89GPIO/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
+        </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
-    <article id="post-HEXO博客建立与完善中遇到的坑" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
+  
+    </div></section>
+  
+
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/test/2020/02/07/HEXO%E5%8D%9A%E5%AE%A2%E5%BB%BA%E7%AB%8B%E4%B8%8E%E5%AE%8C%E5%96%84%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/">HEXO博客建立与完善中遇到的坑</a>
-    </h1>
-  
-
-        
-        <a href="/test/2020/02/07/HEXO%E5%8D%9A%E5%AE%A2%E5%BB%BA%E7%AB%8B%E4%B8%8E%E5%AE%8C%E5%96%84%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/" class="archive-article-date">
-  	<time datetime="2020-02-07T02:46:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="1-搭建个人博客并更换主题yilia"><a href="#1-搭建个人博客并更换主题yilia" class="headerlink" title="1. 搭建个人博客并更换主题yilia"></a>1. 搭建个人博客并更换主题yilia</h1><p>此处暂不提怎么搭建，前人之述备矣，我参考了这篇博客：<br><a href="https://www.jianshu.com/p/860d3e0fff58" target="_blank" rel="noopener">Hexo+GithubPages 非常简单易行的搭建个人博客</a></p>
-<h1 id="2-对yilia的个性化"><a href="#2-对yilia的个性化" class="headerlink" title="2. 对yilia的个性化"></a>2. 对yilia的个性化</h1><blockquote>
-<p>yilia模型的个性化可以参考下面几篇博客：</p>
-<ul>
-<li><a href="https://blog.csdn.net/qq_37513473/article/details/88617281" target="_blank" rel="noopener">Yilia个性设置 by codeant_csdn</a></li>
-<li><a href="https://blog.csdn.net/weixin_43935907/article/details/89332997" target="_blank" rel="noopener">Hexo yilia主题的使用方法 by 笑不语</a></li>
-<li><a href="https://www.jianshu.com/p/c9de55660d1b" target="_blank" rel="noopener">Hexo主题更改以及小功能的添加 by Evan_陈先森</a> </li>
-<li><a href="http://www.lawlite.me/2017/04/13/Hexo-Github实现相册功能/" target="_blank" rel="noopener">Hexo+Github实现相册功能 by Lawlite</a></li>
-</ul>
-</blockquote>
-<h2 id="2-1-之前的一些注意事项"><a href="#2-1-之前的一些注意事项" class="headerlink" title="2.1 之前的一些注意事项"></a>2.1 之前的一些注意事项</h2><p>2.1.1. <code>_config.yml</code>有两个目录，一个是在根目录blog下，还有一个是在主题目录<code>yalia\</code>下,将hexo与git仓库连接起来，需要修改前者中的<strong>repo</strong>项为自己的仓库地址：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@github.com:wjl-pea/test.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
-<p>仓库的地址在这个地方查找：<br><a href="https://imgchr.com/i/1WmRl8" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/08/1WmRl8.md.png" alt="1WmRl8.md.png"></a><br>2.1.2 在网页中插入的图片地址应该从仓库<code>download</code>后在地址栏获取。</p>
-<h2 id="2-2头像不显示-amp-除主页外头像不显示"><a href="#2-2头像不显示-amp-除主页外头像不显示" class="headerlink" title="2.2头像不显示&amp;除主页外头像不显示"></a>2.2头像不显示&amp;除主页外头像不显示</h2><blockquote>
-<p>将喜欢的头像放在<code>F:\blog\themes\yilia\source\img</code>下，在主题目录下的<code>_config.yml</code>中修改</p>
-</blockquote>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">你的头像url</span><br><span class="line">avatar: img/图片名称.jpg</span><br></pre></td></tr></table></figure>
-<p>然后可能还是不行，这个时候参见<a href="https://github.com/litten/hexo-theme-yilia/issues/288" target="_blank" rel="noopener">解决头像的问题 by litten(vilia源博主)</a><br>把其中提到的方法都试了一遍，最后是这么解决的：</p>
-<blockquote>
-<p>把<code>layout/_partial/left-col.ejs</code>的第六行改成 </p>
-</blockquote>
-<pre><code>&lt;img src=&quot;&lt;%- url_for(theme.avatar) %&gt;&quot; class=&quot;js-avatar&quot;&gt;</code></pre><blockquote>
-<p>这样在每个网页的头像都能显示了。<br><em>ps:有时候加载过慢也会有显示不出来的问题，可以清下缓存重新加载。</em></p>
-</blockquote>
-<h2 id="2-3相册的缩略图不显示"><a href="#2-3相册的缩略图不显示" class="headerlink" title="2.3相册的缩略图不显示"></a>2.3相册的缩略图不显示</h2><p>仔细地参照Lawlite的文章进行设置后，我们会发现，相册的缩略图无法显示，但是可以查看到原图。<br>原博评论区和<a href="https://blog.csdn.net/wardseptember/article/details/82780684" target="_blank" rel="noopener">这里</a>的解决方法是一样的，但是我的缩略图仍然不显示。</p>
-<blockquote>
-<p>然后我就想啊，这个<code>empty.png</code>是一定要在网页中使用的，按下<kbd>f12</kbd>，就发现控制台中有红标错误<strong><code>服务器未找到任何匹配请求的 URI(统一资源标识符)匹配的任何内容</code></strong>，后面有个<code>empty.png</code>的路径，和我放置的路径不同（抱歉我找不到原图了）。</p>
-</blockquote>
-<blockquote>
-<p>于是我就灵机一动把<code>empty.png</code>放在了<code>blog/source/photos/ins.j/img</code>的位置（ins.j是新建的）</p>
-</blockquote>
-<p><a href="https://imgchr.com/i/1Wm2Sf" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/08/1Wm2Sf.png" alt="1Wm2Sf.png"></a><br>这样我的缩略图就可以显示了，应该会有所帮助；因为不是专业方向，也就没去探究了（不然又是好几个小时）。<br><a href="https://wjl-pea.github.io/test/photos/" target="_blank" rel="noopener">我的相册</a><br><a href="https://imgchr.com/i/1WmW6S" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/08/1WmW6S.png" alt="1WmW6S.png"></a><br>第一次写博客，以后也会慢慢地补充自己喜欢的方面的文章，锻炼文笔，凝练技术，加油啦！</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">yilia</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/test/2020/02/07/HEXO%E5%8D%9A%E5%AE%A2%E5%BB%BA%E7%AB%8B%E4%B8%8E%E5%AE%8C%E5%96%84%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/test/2020/02/05/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/test/2020/02/05/hello-world/" class="archive-article-date">
-  	<time datetime="2020-02-05T11:52:06.106Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/test/2020/02/05/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-  
 
 
           </div>
@@ -458,10 +231,10 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
+		isHome: false,
 		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
