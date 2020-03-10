@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>stm32学习笔记（一）GPIO | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一、简介GPIO、端口和管脚一查才知道我对这些概念也是不甚清楚的：1.1 GPIO(General-purpose input&#x2F;output)，通用输入输出，以某些寄存器来控制或读取pin脚的电平高低，完成片上和外界的信息交互。1.2 端口是单片机内部（CPU单元）和外部IO的接口组[1]，比如说PA(Port A)端口控制的引脚PA0-7，我个人理解为控制一部分管脚输入输出属性的工具。1.3">
+  <meta name="description" content="一、简介GPIO、端口和管脚一查才知道我对这些概念也是不甚清楚的：1.1 GPIO(General-purpose input&#x2F;output)，通用输入输出，以某些寄存器来控制或读取pin脚的电平高低，完成片上和外界的信息交互。1.2 端口是单片机内部（CPU单元）和外部IO的接口组[1]，比如说PA(Port A)端口控制的引脚PA0-7，我个人理解为控制一部分管脚输入输出属性的工具。1.3 引">
 <meta property="og:type" content="article">
 <meta property="og:title" content="stm32学习笔记（一）GPIO">
 <meta property="og:url" content="http://yoursite.com/2020/02/12/stm32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89GPIO/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="一、简介GPIO、端口和管脚一查才知道我对这些概念也是不甚清楚的：1.1 GPIO(General-purpose input&#x2F;output)，通用输入输出，以某些寄存器来控制或读取pin脚的电平高低，完成片上和外界的信息交互。1.2 端口是单片机内部（CPU单元）和外部IO的接口组[1]，比如说PA(Port A)端口控制的引脚PA0-7，我个人理解为控制一部分管脚输入输出属性的工具。1.3">
+<meta property="og:description" content="一、简介GPIO、端口和管脚一查才知道我对这些概念也是不甚清楚的：1.1 GPIO(General-purpose input&#x2F;output)，通用输入输出，以某些寄存器来控制或读取pin脚的电平高低，完成片上和外界的信息交互。1.2 端口是单片机内部（CPU单元）和外部IO的接口组[1]，比如说PA(Port A)端口控制的引脚PA0-7，我个人理解为控制一部分管脚输入输出属性的工具。1.3 引">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s2.ax1x.com/2020/02/12/1HAH61.png">
 <meta property="og:image" content="https://s2.ax1x.com/2020/02/12/1HAzfH.png">
@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://s2.ax1x.com/2020/02/12/1HEA78.png">
 <meta property="og:image" content="https://s2.ax1x.com/2020/02/12/1HEVAS.png">
 <meta property="article:published_time" content="2020-02-12T06:32:49.000Z">
-<meta property="article:modified_time" content="2020-03-10T10:28:44.703Z">
+<meta property="article:modified_time" content="2020-03-10T10:33:13.678Z">
 <meta property="article:author" content="wjl-pea">
 <meta property="article:tag" content="stm32">
 <meta property="article:tag" content="arm">
@@ -189,8 +189,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <a id="more"></a>
-<h1 id="一、简介GPIO、端口和管脚"><a href="#一、简介GPIO、端口和管脚" class="headerlink" title="一、简介GPIO、端口和管脚"></a>一、简介GPIO、端口和管脚</h1><p>一查才知道我对这些概念也是不甚清楚的：<br>1.1 <strong>GPIO(General-purpose input/output)</strong>，通用输入输出，以某些寄存器来控制或读取pin脚的电平高低，完成片上和外界的信息交互。<br>1.2 <strong>端口</strong>是单片机内部（CPU单元）和外部IO的接口组[1]，比如说<code>PA(Port A)</code>端口控制的引脚PA0-7，我个人理解为控制一部分管脚输入输出属性的工具。<br>1.3 <strong>引脚</strong>(或者称之为管脚PIN)，也就是芯片外接的引脚。可以直接作为GPIO使用，也可以通过端口复用成别的功能来使用。<br>以stm32f103c8t6为例，48管脚中，除了电源管脚，一共有4组37个管脚可和GPIO连接使用，PA0-15，PB0-15，PC13-15，PD0-1，而其中的某一个管脚也可以复用为其他外设管脚来完成特定的功能。<br>cube上扣下来的引脚图：<br><a href="https://imgchr.com/i/1HAH61" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/12/1HAH61.png" alt="1HAH61.png"></a><br>数据手册上的引脚定义：<br><a href="https://imgchr.com/i/1HAzfH" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/12/1HAzfH.png" alt="1HAzfH.png"></a></p>
+        <h1 id="一、简介GPIO、端口和管脚"><a href="#一、简介GPIO、端口和管脚" class="headerlink" title="一、简介GPIO、端口和管脚"></a>一、简介GPIO、端口和管脚</h1><p>一查才知道我对这些概念也是不甚清楚的：<br>1.1 <strong>GPIO(General-purpose input/output)</strong>，通用输入输出，以某些寄存器来控制或读取pin脚的电平高低，完成片上和外界的信息交互。<br>1.2 <strong>端口</strong>是单片机内部（CPU单元）和外部IO的接口组[1]，比如说<code>PA(Port A)</code>端口控制的引脚PA0-7，我个人理解为控制一部分管脚输入输出属性的工具。<br>1.3 <strong>引脚</strong>(或者称之为管脚PIN)，也就是芯片外接的引脚。可以直接作为GPIO使用，也可以通过端口复用成别的功能来使用。<br>以stm32f103c8t6为例，48管脚中，除了电源管脚，一共有4组37个管脚可和GPIO连接使用，PA0-15，PB0-15，PC13-15，PD0-1，而其中的某一个管脚也可以复用为其他外设管脚来完成特定的功能。<br>cube上扣下来的引脚图：</p>
+<a id="more"></a>
+<p><a href="https://imgchr.com/i/1HAH61" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/12/1HAH61.png" alt="1HAH61.png"></a><br>数据手册上的引脚定义：<br><a href="https://imgchr.com/i/1HAzfH" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/12/1HAzfH.png" alt="1HAzfH.png"></a></p>
 <h1 id="二、GPIO功能描述"><a href="#二、GPIO功能描述" class="headerlink" title="二、GPIO功能描述"></a>二、GPIO功能描述</h1><p><a href="https://imgchr.com/i/1HALm6" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/12/1HALm6.png" alt="1HALm6.png"></a><br>主要意思就是说，我们通过软件配置某些GPIO端口寄存器，就可以控制IO端口的模式为上面的8种之一。</p>
 <h2 id="2-1-输入模式"><a href="#2-1-输入模式" class="headerlink" title="2.1 输入模式"></a>2.1 输入模式</h2><p><a href="https://imgchr.com/i/1HEppd" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/12/1HEppd.png" alt="1HEppd.png"></a><br>上拉、下拉、浮空，三者的区别就是是否加了上拉或者下拉电阻，浮空什么都不加。如果上拉、下拉，对应电平就会被强制被拉高、拉低，而浮空输入的电平则会变得不确定，在高电平到低电平浮动，常用于通信模块。肖特基触发器可以理解为一个把模拟信号转化成数字信号的东西（具体可百度）。<br>而模拟输入一般就是为A/D服务的，关闭肖特基触发器，采集到的是不经加工的信号。由A/D采集得到一定精度的电压值。</p>
 <h2 id="2-2-输出模式"><a href="#2-2-输出模式" class="headerlink" title="2.2 输出模式"></a>2.2 输出模式</h2><p><a href="https://imgchr.com/i/1HAXTO" target="_blank" rel="noopener"><img src="https://s2.ax1x.com/2020/02/12/1HAXTO.png" alt="1HAXTO.png"></a><br>输出模式中输出的电平信息可通过输出数据寄存器或者是复用功能输出来获取，以此来区分是复用输出。<br>后端的推挽结构需要仔细理解：</p>
