@@ -6,15 +6,43 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://wjl-uestc.github.io">
-  <title>Hexo</title>
+  <title>stm32学习笔记（二）简易示波器v1.1 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://wjl-uestc.github.io/index.html">
+  <meta name="description" content="一、简介目标：制作一款简易示波器；硬件：正点mini板（stm32f103rct6），杜邦线，2.8寸TFTLCD，ST&#x2F;Link-v2；软件：cubemx，keil5 mdk；原理：单片机timer外部触发AD转换，并放入DMA中；待采集到足够数据，在LCD上绘制波形，波形绘制方法为直接画线段；">
+<meta property="og:type" content="article">
+<meta property="og:title" content="stm32学习笔记（二）简易示波器v1.1">
+<meta property="og:url" content="https://wjl-uestc.github.io/2020/03/27/stm32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89%E7%AE%80%E6%98%93%E7%A4%BA%E6%B3%A2%E5%99%A8v1-1/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一、简介目标：制作一款简易示波器；硬件：正点mini板（stm32f103rct6），杜邦线，2.8寸TFTLCD，ST&#x2F;Link-v2；软件：cubemx，keil5 mdk；原理：单片机timer外部触发AD转换，并放入DMA中；待采集到足够数据，在LCD上绘制波形，波形绘制方法为直接画线段；">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/27/GFpqun.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/27/GFpT3Q.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/27/GFpHjs.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/27/GFpo9g.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/27/GFp4N8.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/27/GFpLBq.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/27/GFpOH0.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/27/GFpjEV.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/27/GFpvNT.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/27/GFpx4U.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/27/GF9SCF.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/27/GF9p34.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/27/GF99gJ.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/27/GF9Cv9.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/27/GF9iuR.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/27/GF9FD1.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/27/GF9kHx.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/27/GF9EE6.jpg">
+<meta property="og:image" content="https://s1.ax1x.com/2020/03/27/GF9VUK.jpg">
+<meta property="article:published_time" content="2020-03-27T15:14:20.000Z">
+<meta property="article:modified_time" content="2020-03-27T17:19:27.945Z">
 <meta property="article:author" content="wjl-uestc">
+<meta property="article:tag" content="stm32">
+<meta property="article:tag" content="arm">
+<meta property="article:tag" content="DMA">
+<meta property="article:tag" content="ADC">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2020/03/27/GFpqun.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -148,16 +176,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-stm32学习笔记（二）简易示波器v1-1" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-stm32学习笔记（二）简易示波器v1-1" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/myblog/2020/03/27/stm32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89%E7%AE%80%E6%98%93%E7%A4%BA%E6%B3%A2%E5%99%A8v1-1/">stm32学习笔记（二）简易示波器v1.1</a>
+    <h1 class="article-title" itemprop="name">
+      stm32学习笔记（二）简易示波器v1.1
     </h1>
   
 
@@ -171,9 +197,54 @@
     <div class="article-entry" itemprop="articleBody">
       
         <h1 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a><strong>一、简介</strong></h1><p>目标：制作一款简易示波器；<br>硬件：正点mini板（stm32f103rct6），杜邦线，2.8寸TFTLCD，ST/Link-v2；<br>软件：cubemx，keil5 mdk；<br>原理：单片机timer外部触发AD转换，并放入DMA中；待采集到足够数据，在LCD上绘制波形，波形绘制方法为直接画线段；</p>
-        
+<a id="more"></a>
+<p><img src="https://s1.ax1x.com/2020/03/27/GFpqun.png" alt="GFpqun.png"><br>另外增加按键中断（方便后期改进），增加串口DMA不定长接收和发送（方便测试）；</p>
+<h1 id="二、cubemx配置"><a href="#二、cubemx配置" class="headerlink" title="二、cubemx配置"></a><strong>二、cubemx配置</strong></h1><h2 id="①选择芯片"><a href="#①选择芯片" class="headerlink" title="①选择芯片"></a>①选择芯片</h2><p><img src="https://s1.ax1x.com/2020/03/27/GFpT3Q.png" alt="GFpT3Q.png"></p>
+<h2 id="②配置GPIO"><a href="#②配置GPIO" class="headerlink" title="②配置GPIO"></a>②配置GPIO</h2><p><img src="https://s1.ax1x.com/2020/03/27/GFpHjs.png" alt="GFpHjs.png"><br>这里实际上LCD所用的io不需配置，因为使用的官方LCD函数已经配置过了，这里只是做一个标识，使我们在选择AD输入、pwm输出等引脚的时候不会重复。<br>这里的LED(PD2)采用推挽输出，KEY0(PC5)选择上拉输入（因为在原理图中KEY0直接连接地）</p>
+<h2 id="③配置时钟源——高速外部时钟HSE"><a href="#③配置时钟源——高速外部时钟HSE" class="headerlink" title="③配置时钟源——高速外部时钟HSE"></a>③配置时钟源——高速外部时钟HSE</h2><p>其中的两个外部时钟源：<br>BYPASS Clock Source（旁路时钟源）——直接从外部导入时钟源信号；<br>Crystal/Ceramic Resonator（晶体/陶瓷晶振）——晶体需要加源（单片机供给），晶振自带源，通常是8M的频率；<br>一般而言，外部（相对mcu，板上）提供的时钟精度更高，所以我们经常会选择使能HSE作为时钟源。<br><img src="https://s1.ax1x.com/2020/03/27/GFpo9g.png" alt="GFpo9g.png"></p>
+<h2 id="④仿真方式"><a href="#④仿真方式" class="headerlink" title="④仿真方式"></a>④仿真方式</h2><p>第一项为调试接口，我们选择SWD（即serial wire debug）；<br>PS：如果不选，可能无法多次烧录，这个时候就要使用reset烧录或者别的方法解决了。<br>第二项为系统定时，多数情况是提供给操作系统用；<br><img src="https://s1.ax1x.com/2020/03/27/GFp4N8.png" alt="GFp4N8.png"> </p>
+<h2 id="⑤ADC"><a href="#⑤ADC" class="headerlink" title="⑤ADC"></a>⑤ADC</h2><p>选择通道10，更改下面的选项：<br>parameter setting：<br>Data alignment（对齐方式）——右对齐；<br>Enable regular conversions（定时转换）——使能；<br>External Trigger Corversion Source（外部触发转换源）——TIM8触发（而且一定是上升沿触发）；<br><img src="https://s1.ax1x.com/2020/03/27/GFpLBq.png" alt="GFpLBq.png"><br>DMA setting：<br>点击Add，Mode选择circular，datawidth选择word（DMA缓存需要设置为uint32_t）；<br><img src="https://s1.ax1x.com/2020/03/27/GFpOH0.png" alt="GFpOH0.png"> </p>
+<h2 id="⑥配置timer"><a href="#⑥配置timer" class="headerlink" title="⑥配置timer"></a>⑥配置timer</h2><p>TIM3CH1——PWM输出：<br>pre（预分频）=7200-1；<br>counter mode（计数模式）——向上；<br>counter period（计数周期）——100-1；<br>pulse（duty=pulse /counter period）——50；<br><img src="https://s1.ax1x.com/2020/03/27/GFpjEV.png" alt="GFpjEV.png"><br> TIM8<br>Clock source改为Intemal clock<br>Psc设为720-1；<br>Master/slave mode——disable<br>Trigger Event Selection——Update Event<br><img src="https://s1.ax1x.com/2020/03/27/GFpvNT.png" alt="GFpvNT.png"></p>
+<h2 id="⑦usart1"><a href="#⑦usart1" class="headerlink" title="⑦usart1"></a>⑦usart1</h2><p>如图设置<br>波特率115200；<br>字长8bit，无校验，停止位1；<br><img src="https://s1.ax1x.com/2020/03/27/GFpx4U.png" alt="GFpx4U.png"><br><img src="https://s1.ax1x.com/2020/03/27/GF9SCF.png" alt="GF9SCF.png"></p>
+<h2 id="⑧时钟配置"><a href="#⑧时钟配置" class="headerlink" title="⑧时钟配置"></a>⑧时钟配置</h2><p><img src="https://s1.ax1x.com/2020/03/27/GF9p34.png" alt="GF9p34.png"><br><img src="https://s1.ax1x.com/2020/03/27/GF99gJ.png" alt="GF99gJ.png"><br>通过参考手册我们可以发现，TIM8挂在APB2下，TIM3挂在APB1下，分得的时钟都是72M，<br>则TIM3产生的pwm为72M/7200/100=100hz，占空比50/100=50%，同理采样频率为1khz。</p>
+<h2 id="⑨工程配置"><a href="#⑨工程配置" class="headerlink" title="⑨工程配置"></a>⑨工程配置</h2><p><img src="https://s1.ax1x.com/2020/03/27/GF9Cv9.png" alt="GF9Cv9.png"><br><img src="https://s1.ax1x.com/2020/03/27/GF9iuR.png" alt="GF9iuR.png"><br>随后打开工程即可。</p>
+<h1 id="三、程序"><a href="#三、程序" class="headerlink" title="三、程序"></a><strong>三、程序</strong></h1><h2 id="①添加hardware文件夹中的sys-c，delay-c，LCD-c"><a href="#①添加hardware文件夹中的sys-c，delay-c，LCD-c" class="headerlink" title="①添加hardware文件夹中的sys.c，delay.c，LCD.c"></a>①添加hardware文件夹中的sys.c，delay.c，LCD.c</h2><p><img src="https://s1.ax1x.com/2020/03/27/GF9FD1.png" alt="GF9FD1.png"><br>sys.c中是正点原子封装的仿51的直接操作io的代码；<br>delay.c中我修改了hal_delay为us延时（原来为毫秒延时）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">hal_delay_init</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	HAL_RCC_GetHCLKFreq();<span class="comment">//1000000 1us中断一次，即HAL_Delay函数延时基准为1us</span></span><br><span class="line">  HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/<span class="number">1000000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">delay_us</span><span class="params">(u32 us)</span></span></span><br><span class="line"><span class="function"></span>&#123;	</span><br><span class="line">  HAL_Delay(us);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">delay_ms</span><span class="params">(u16 nms)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	u32 i;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;nms;i++) delay_us(<span class="number">1000</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>LCD.c中是tftlcd屏的支持函数。可修改：dir:0,竖屏；1,横屏</p>
+<h2 id="②添加头文件所在的文件夹"><a href="#②添加头文件所在的文件夹" class="headerlink" title="②添加头文件所在的文件夹"></a>②添加头文件所在的文件夹</h2><p><img src="https://s1.ax1x.com/2020/03/27/GF9kHx.png" alt="GF9kHx.png"> </p>
+<h2 id="③usart-c"><a href="#③usart-c" class="headerlink" title="③usart.c"></a>③usart.c</h2><p>添加：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> BUFFER_SIZE 200</span></span><br><span class="line"><span class="keyword">volatile</span> <span class="keyword">uint8_t</span> rx_len=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">volatile</span> <span class="keyword">uint8_t</span> recv_end_flag=<span class="number">0</span>;</span><br><span class="line"><span class="keyword">uint8_t</span> rx_buffer[<span class="number">200</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">fputc</span><span class="params">(<span class="keyword">int</span> ch, FILE *f)</span>   <span class="comment">//重定义</span></span></span><br><span class="line"><span class="function"></span>&#123;      </span><br><span class="line">	<span class="keyword">while</span>((USART1-&gt;SR&amp;<span class="number">0X40</span>)==<span class="number">0</span>); <span class="comment">//循环发送,直到发送完毕   </span></span><br><span class="line">    USART1-&gt;DR = (<span class="keyword">uint8_t</span>) ch;      </span><br><span class="line">	<span class="keyword">return</span> ch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="④adc-c"><a href="#④adc-c" class="headerlink" title="④adc.c"></a>④adc.c</h2><p>添加：<br>    void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)<br>//全部数据传输完毕开启中断，运行此语句<br>{<br>    adc_flag=1;<br>}    </p>
+<h2 id="⑤stm32f1xx-it-c"><a href="#⑤stm32f1xx-it-c" class="headerlink" title="⑤stm32f1xx_it.c"></a>⑤stm32f1xx_it.c</h2><p>`修改USART1_IRQHandler：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">USART1_IRQHandler</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">/* USER CODE BEGIN USART1_IRQn 0 */</span></span><br><span class="line">  <span class="keyword">uint32_t</span> tmp_flag = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">uint32_t</span> temp;</span><br><span class="line">	tmp_flag =__HAL_UART_GET_FLAG(&amp;huart1,UART_FLAG_IDLE); <span class="comment">//获取IDLE标志位</span></span><br><span class="line">	<span class="keyword">if</span>((tmp_flag != RESET))<span class="comment">//idle标志被置位</span></span><br><span class="line">	&#123; </span><br><span class="line">		__HAL_UART_CLEAR_IDLEFLAG(&amp;huart1);<span class="comment">//清除标志位</span></span><br><span class="line">		temp = huart1.Instance-&gt;SR;  <span class="comment">//清除状态寄存器SR,读取SR寄存器可以实现清除SR寄存器的功能</span></span><br><span class="line">		temp = huart1.Instance-&gt;DR; <span class="comment">//读取数据寄存器中的数据</span></span><br><span class="line">		HAL_UART_DMAStop(&amp;huart1); <span class="comment">//</span></span><br><span class="line">		temp  = hdma_usart1_rx.Instance-&gt;CNDTR;<span class="comment">// 获取DMA中未传输的数据个数，NDTR寄存器分析见下面</span></span><br><span class="line">		rx_len =  BUFFER_SIZE - temp; <span class="comment">//总计数减去未传输的数据个数，得到已经接收的数据个数</span></span><br><span class="line">		recv_end_flag = <span class="number">1</span>;	<span class="comment">// 接受完成标志位置1	</span></span><br><span class="line">	 &#125;</span><br><span class="line">  <span class="comment">/* USER CODE END USART1_IRQn 0 */</span></span><br><span class="line">  HAL_UART_IRQHandler(&amp;huart1);</span><br><span class="line">  <span class="comment">/* USER CODE BEGIN USART1_IRQn 1 */</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* USER CODE END USART1_IRQn 1 */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="⑥main-c"><a href="#⑥main-c" class="headerlink" title="⑥main.c"></a>⑥main.c</h2><p>添加：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">…</span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"delay.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"sys.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"lcd.h"</span></span></span><br><span class="line">…</span><br><span class="line"></span><br><span class="line">hal_delay_init();                                    <span class="comment">//将HAL_delay定义为us延时，并定义delay_ms，delay_us</span></span><br><span class="line"> 	LCD_Init();</span><br><span class="line">	</span><br><span class="line">	POINT_COLOR=RED;         </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"HELLO WORLD!\n"</span>); 	<span class="comment">//lcd画笔为红色</span></span><br><span class="line">	HAL_TIM_PWM_Start(&amp;htim3, TIM_CHANNEL_1);            <span class="comment">//pwm波生成，用于测试</span></span><br><span class="line">	HAL_TIM_Base_Start(&amp;htim8);                          <span class="comment">//控制AD的timer使能</span></span><br><span class="line">	HAL_ADC_Start_DMA(&amp;hadc1, (<span class="keyword">uint32_t</span> *)adc_val,<span class="number">1000</span>); <span class="comment">//全字传输AD数据（事实上uint8_t即可）</span></span><br><span class="line">	__HAL_UART_ENABLE_IT(&amp;huart1, UART_IT_IDLE);         <span class="comment">//usart1中断</span></span><br><span class="line">	HAL_UART_Receive_DMA(&amp;huart1,rx_buffer,BUFFER_SIZE); <span class="comment">//uart dma接收使能</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="comment">/* USER CODE END WHILE */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* USER CODE BEGIN 3 */</span></span><br><span class="line">		<span class="keyword">if</span>(recv_end_flag ==<span class="number">1</span>)                               <span class="comment">//将接受到的串口数据打印到pc</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"rx_len=%d\r\n"</span>,rx_len);<span class="comment">//打印接收长度</span></span><br><span class="line">			HAL_UART_Transmit(&amp;huart1,rx_buffer,rx_len,<span class="number">0xffff</span>);<span class="comment">//接收数据打印出来</span></span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">uint8_t</span> i=<span class="number">0</span>;i&lt;rx_len;i++)</span><br><span class="line">				&#123;</span><br><span class="line">					rx_buffer[i]=<span class="number">0</span>;<span class="comment">//清接收缓存</span></span><br><span class="line">				&#125;</span><br><span class="line">			rx_len=<span class="number">0</span>;<span class="comment">//清除计数</span></span><br><span class="line">			recv_end_flag=<span class="number">0</span>;<span class="comment">//清除接收结束标志位</span></span><br><span class="line">			HAL_UART_Receive_DMA(&amp;huart1,rx_buffer,BUFFER_SIZE);<span class="comment">//重新打开DMA接收</span></span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span> (HAL_GPIO_ReadPin(GPIOC,GPIO_PIN_5)==<span class="number">0</span>)           <span class="comment">//按键控制灯的翻转</span></span><br><span class="line">		&#123;</span><br><span class="line">			HAL_GPIO_TogglePin(GPIOD,GPIO_PIN_2);</span><br><span class="line">			delay_ms(<span class="number">200</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span> ((DMA1_Channel1-&gt;CNDTR&gt;=<span class="number">320</span>) &amp;&amp; (adc_flag))  <span class="comment">//CNDTR寄存器——存储当前的dma传输的数据个数</span></span><br><span class="line">		&#123;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">int</span> j;</span><br><span class="line">			LCD_Clear(WHITE);	</span><br><span class="line">			<span class="keyword">for</span> (j=<span class="number">0</span>;j&lt;=<span class="number">320</span>;j++)</span><br><span class="line">			LCD_DrawLine(j,<span class="number">200</span>-adc_val[j]*<span class="number">100</span>/<span class="number">4800</span>,j+<span class="number">1</span>,<span class="number">200</span>-adc_val[j+<span class="number">1</span>]*<span class="number">100</span>/<span class="number">4800</span>);</span><br><span class="line">			adc_flag=<span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="⑦头文件稍加修改"><a href="#⑦头文件稍加修改" class="headerlink" title="⑦头文件稍加修改"></a>⑦头文件稍加修改</h2><h1 id="四、效果展示"><a href="#四、效果展示" class="headerlink" title="四、效果展示"></a><strong>四、效果展示</strong></h1><p>接pwm波：<br><img src="https://s1.ax1x.com/2020/03/27/GF9EE6.jpg" alt="GF9EE6.jpg"><br>啥子都不接：<br><img src="https://s1.ax1x.com/2020/03/27/GF9VUK.jpg" alt="GF9VUK.jpg"></p>
+<h1 id="五、不足与改进"><a href="#五、不足与改进" class="headerlink" title="五、不足与改进"></a><strong>五、不足与改进</strong></h1><p>①只能测0-3.3V-&gt;AD前端加极性转换和信号衰减；<br>②精度不够，单片机内置只有12位-&gt;外接AD模块；<br>③采样率不够，AD采样率最多到1M，能完整采出的信号最多到几百khz-&gt;再想想；<br>④界面没完善-&gt;显示幅度波形之类的。<br>源码：<a href="https://github.com/wjl-uestc/code" target="_blank" rel="noopener" title="简易示波器v1.1">https://github.com/wjl-uestc/code</a></p>
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -205,16 +276,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/myblog/2020/03/27/stm32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89%E7%AE%80%E6%98%93%E7%A4%BA%E6%B3%A2%E5%99%A8v1-1/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://wjl-uestc.github.io/2020/03/27/stm32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89%E7%AE%80%E6%98%93%E7%A4%BA%E6%B3%A2%E5%99%A8v1-1/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/myblog/2020/03/11/bns/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">bns</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -234,309 +364,14 @@
 
 
 
-
   
-    <article id="post-bns" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/myblog/2020/03/11/bns/">bns</a>
-    </h1>
   
 
-        
-        <a href="/myblog/2020/03/11/bns/" class="archive-article-date">
-  	<time datetime="2020-03-11T14:37:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-11</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><strong>再见，剑灵</strong><br><img src="https://s1.ax1x.com/2020/03/17/8t6NWR.png" alt="8t6NWR.png"></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">bns</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/myblog/2020/03/11/bns/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-stm32学习笔记（一）GPIO" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/myblog/2020/02/12/stm32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89GPIO/">stm32学习笔记（一）GPIO</a>
-    </h1>
   
 
-        
-        <a href="/myblog/2020/02/12/stm32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89GPIO/" class="archive-article-date">
-  	<time datetime="2020-02-12T06:32:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="一、简介GPIO、端口和管脚"><a href="#一、简介GPIO、端口和管脚" class="headerlink" title="一、简介GPIO、端口和管脚"></a>一、简介GPIO、端口和管脚</h1><p>一查才知道我对这些概念也是不甚清楚的：<br>1.1 <strong>GPIO(General-purpose input/output)</strong>，通用输入输出，以某些寄存器来控制或读取pin脚的电平高低，完成片上和外界的信息交互。<br>1.2 <strong>端口</strong>是单片机内部（CPU单元）和外部IO的接口组[1]，比如说<code>PA(Port A)</code>端口控制的引脚PA0-7，我个人理解为控制一部分管脚输入输出属性的工具。<br>1.3 <strong>引脚</strong>(或者称之为管脚PIN)，也就是芯片外接的引脚。可以直接作为GPIO使用，也可以通过端口复用成别的功能来使用。<br>以stm32f103c8t6为例，48管脚中，除了电源管脚，一共有4组37个管脚可和GPIO连接使用，PA0-15，PB0-15，PC13-15，PD0-1，而其中的某一个管脚也可以复用为其他外设管脚来完成特定的功能。<br>cube上扣下来的引脚图：</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">stm32</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">arm</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">GPIO</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/myblog/2020/02/12/stm32%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89GPIO/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-HEXO博客建立与完善中遇到的坑" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/myblog/2020/02/07/HEXO%E5%8D%9A%E5%AE%A2%E5%BB%BA%E7%AB%8B%E4%B8%8E%E5%AE%8C%E5%96%84%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/">HEXO博客建立与完善中遇到的坑</a>
-    </h1>
   
 
-        
-        <a href="/myblog/2020/02/07/HEXO%E5%8D%9A%E5%AE%A2%E5%BB%BA%E7%AB%8B%E4%B8%8E%E5%AE%8C%E5%96%84%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/" class="archive-article-date">
-  	<time datetime="2020-02-07T02:46:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="1-搭建个人博客并更换主题yilia"><a href="#1-搭建个人博客并更换主题yilia" class="headerlink" title="1. 搭建个人博客并更换主题yilia"></a>1. 搭建个人博客并更换主题yilia</h1><p>此处暂不提怎么搭建，前人之述备矣，我参考了这篇博客：<br><a href="https://www.jianshu.com/p/860d3e0fff58" target="_blank" rel="noopener">Hexo+GithubPages 非常简单易行的搭建个人博客</a></p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">hexo</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">yilia</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/myblog/2020/02/07/HEXO%E5%8D%9A%E5%AE%A2%E5%BB%BA%E7%AB%8B%E4%B8%8E%E5%AE%8C%E5%96%84%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/myblog/2020/02/05/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/myblog/2020/02/05/hello-world/" class="archive-article-date">
-  	<time datetime="2020-02-05T11:52:06.106Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-02-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/myblog/2020/02/05/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
 
 
@@ -559,8 +394,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
